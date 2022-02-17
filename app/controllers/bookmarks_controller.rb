@@ -1,5 +1,6 @@
 class BookmarksController < ApplicationController
-    
+  
+    before_action :set_bookmarks, only: :destroy
 
     def new
       @bookmark = Bookmark.new
@@ -15,12 +16,19 @@ class BookmarksController < ApplicationController
         else
             render :new
         end
+    end
 
-
+    def destroy
+        @bookmark.destroy
     end
     private 
+
     def bookmark_params
         params.require(:bookmark).permit(:comment, :movie_id )
+    end
+
+    def set_bookmarks
+        @bookmark = Bookmark.find(params[:id])
     end
 
 
